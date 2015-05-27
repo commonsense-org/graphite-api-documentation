@@ -11,7 +11,6 @@ Table of Contents
 
 * [Retrieving Resources](#api-retrieving-resources)
 * [Request Authentication](#api-request-authentication)
-* [Data Reference Population](#api-data-reference-population)
 
 #### Endpoints:
 
@@ -19,14 +18,14 @@ Table of Contents
 * [GET /v3/education/products/{id}](#api-products-item) - Get a specified product with Learning Rating review.
 * [GET /v3/education/flows](#api-flows-list) - Get a list of Lesson Flows.
 * [GET /v3/education/flows/{id}](#api-flows-item) - Get a specified Lesson Flow.
-* [GET /v3/education/blogs](#api_blogs_list) - Get a list of blog posts.
-* [GET /v3/education/blogs/{id}](#api_blogs_item) - Get a specified blog post.
-* [GET /v3/education/lists](#api_lists_list) - Get a list of Top Picks lists.
-* [GET /v3/education/lists/{id}](#api_lists_item) - Get a specified Top Picks List.
-* [GET /v3/education/boards](#api_boards_list) - Get a list of Boards.
+* [GET /v3/education/blogs](#api-blogs-list) - Get a list of blog posts.
+* [GET /v3/education/blogs/{id}](#api-blogs-item) - Get a specified blog post.
+* [GET /v3/education/lists](#api-lists-list) - Get a list of Top Picks lists.
+* [GET /v3/education/lists/{id}](#api-lists-item) - Get a specified Top Picks List.
+* [GET /v3/education/boards](#api-boards-list) - Get a list of Boards.
 * [GET /v3/education/boards/{id}](#api-boards-item) - Get a specified Board.
 * [GET /v3/education/user_reviews](#api-user-reviews-list) - Get a list of product Field Notes.
-* [GET /v3/education/user_reviews/{id}](#api-user-reivews-item) - Get a specified product Field Note.
+* [GET /v3/education/user_reviews/{id}](#api-user-reviews-item) - Get a specified product Field Note.
 * [GET /v3/education/users](#api-users-list) - Get a list of users.
 * [GET /v3/education/users/{id}](#api-users-item) - Get a specified user.
 * [GET /v3/education/search/products/{query}](#api-search-products) - Search for products.
@@ -491,7 +490,7 @@ An array of blog post objects.
   "user_id":1855701,
   "url":"https://www.graphite.org/blog/minecraft-or-minecraftedu-at-school-pros-cons-and-what-its-great-for",
   "subheader":null,
-  "body":"<p>One of the great things about Minecraft is that there's not just one version. It exists as a stand-alone game, but creative players also create modifications, or \"mods,\" that add all sorts of upgrades, features, and options for every taste. One of the most popular mods for classrooms is MinecraftEdu.</p>\n<p>Since it's targeted at classrooms, teachers may be tempted to ignore <a href=\"/game/minecraft\">Minecraft</a> and head straight for <a href=\"/game/minecraftedu\">MinecraftEdu</a> -- but not so fast!</p>\n<p>Both Minecraft and MinecraftEdu can serve as great learning tools. So which version is right for you and your classroom? Consult this list of pros, cons, and suggestions to make your decision.</p>\n<p>Photo by <a href=\"http://www.flickr.com/photos/jasongraham99/9123836897\" target=\"_blank\">Jason Graham</a></p>\n<p><img alt=\"\" src=\"/sites/default/files/styles/galleryformatter_slide/public/experience-media-file/sansing_csm_minecraft_pic_5.jpg?itok=tcKR_AsV\" style=\"width: 500px; height: 293px;\" /></p>\n<h2><a href=\"/game/minecraft\"><strong>Minecraft</strong></a></h2>\n<h4><strong>Pros:</strong></h4>\n<ul><li>Preserves a sense of open-ended play and exploration.</li>\n<li>Teachers and students play as peers.</li>\n<li>Feels less like school and more like play.</li>\n<li>Student-directed.</li>\n<li>Gameplay possibilities grow directly with players' abilities.</li>\n<li>Kids can easily open games for multi-player group work over local area networks.</li>\n<li>Open to any available mod, character skin, or texture pack.</li>\n<li>Opens the door to programming.</li>\n</ul><h4><strong>Cons:</strong></h4>\n<ul><li>Each installation can be different depending on how players modify it, so not every game will work with others.</li>\n<li>Students will likely be doing vastly different things with the game depending on what they've learned to do with it and to it.</li>\n<li>Students are largely responsible for guarding the safety of their worlds and determining who can and can't play with them or see and assess their work.</li>\n</ul><h4><strong>Great for:</strong></h4>\n<ul><li>Students who already have Minecraft accounts.</li>\n<li>Individual and small group projects.</li>\n<li>Clubs</li>\n<li>Self-starting and goal-driven students</li>\n</ul><p><img alt=\"\" src=\"/sites/default/files/styles/galleryformatter_slide/public/experience-media-file/minecraftedu1.jpg?itok=X6tZCbxC\" style=\"width: 500px; height: 281px;\" /></p>\n<h2><a href=\"/game/minecraftedu\"><strong>MinecraftEdu</strong></a></h2>\n<h4><strong>Pros:</strong></h4>\n<ul><li>Excellent tutorial for first time players.</li>\n<li>Classroom management tools make wrangling students and setting up lessons much easier.</li>\n<li>Assignments (and entire maps) can be easily created, assigned, and monitored.</li>\n<li>MinecraftEdu purchase bundles classroom licenses and mods making it an all-in-one purchase, and allowing student and teacher work to be archived and preserved.</li>\n<li>All players in a MinecraftEdu game play the same version of the game with the same mods, reducing compatibility issues in multiplayer games.</li>\n</ul><h4><strong>Cons:</strong></h4>\n<ul><li>Heavily teacher controlled world means some sense of wonder and exploration are lost.</li>\n<li>Some mods can't be used by students, closing off some creative possibilities and valuable skills gains.</li>\n<li>Students, especially those familiar with the game, may feel a bit handcuffed.</li>\n</ul><h4><strong>Great for:</strong></h4>\n<ul><li>Delivering specific pieces of learning content.</li>\n<li>Whole-class lessons and projects.</li>\n<li>Students without existing access to Minecraft.</li>\n<li>Teachers, schools, and divisions looking to dip a toe into participatory or game-based learning.</li>\n</ul><p>Most importantly, you can't go wrong with either version; Minecraft -- no matter the flavor -- is an investment in the best kind of edtech -- the kind that gets kids making and creating meaning. Do you use Minecraft or MinecraftEdu with your students? Which would you recommend, and why?</p>\n<h3>See what other teachers are saying about Minecraft:</h3>\n<p><a href=\"/game/minecraft-teacher-review/3889538\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/default_images/missing_teacher-blue_0.png?itok=vY6dpHhY\" style=\"width: 64px; height: 64px;\" /></a><a href=\"/game/minecraft-teacher-review/3889515\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/user-pictures/1914816-user-picture.jpg?itok=3k38zOCC\" style=\"width: 64px; height: 64px;\" /></a><a href=\"/game/minecraft-teacher-review/3871506\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/user-pictures/1858226-user-picture.jpg?itok=7rkWJzuF\" style=\"width: 64px; height: 64px;\" /></a>  </p>\n<h3><a href=\"/node/add/tlr-field-note?field_reference_learning_rating=2897906\">Be the first educator to write a Field note about MinecraftEdu.</a></h3>\n<h3>New to Minecraft? Here are the basics:</h3>\n<p><a href=\"https://minecraft.net/\" target=\"_blank\">Minecraft</a> is a sandbox game that rewards players for collecting and combining resources into new, useful items that enrich gameplay and help further exploration and creativity. Although it has an “End” zone for players who want to fight the game’s boss (a dragon), Minecraft has no plot -- the story is up to the player to define. Depending on what the player chooses to build, they’ll task themselves with collecting specific resources necessary to craft items that can help them build cooler and/or more useful things, or explore. Each completed project leads to a new one, sending the player deeper into the world. </p>\n<p>Minecraft can be played in one of two modes: Creative Mode and Survival Mode. Creative Mode removes the need to collect resources as well removes monsters, as well as health and hunger meters, allowing players to build easily and in peace. Minecraft is available on several platforms as well. </p>\n<p>You can buy <a href=\"https://minecraft.net/store\" target=\"_blank\">Minecraft for PC/Mac</a>. Minecraft: Pocket Edition is available for <a href=\"https://itunes.apple.com/en/app/minecraft-pocket-edition/id479516143\" target=\"_blank\">iOS</a> and <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe&amp;hl=en\" target=\"_blank\">Android</a>, and Minecraft: Xbox 360 Edition is available on the <a href=\"http://marketplace.xbox.com/en-GB/Product/Minecraft-Xbox-360-Edition/66acd000-77fe-1000-9115-d802584111f7\" target=\"_blank\">XBLA Marketplace</a>. <a href=\"http://minecraftedu.com/page/\">MinecraftEdu</a> is a collaboration between a group of educators and the game developer and enables teacherse to purchase copies of the game at a reduced cost.</p>\n<p> </p>\n",
+  "body":"<p>One of the great things about Minecraft is that there's not just one version. It exists as a stand-alone game, but creative players also create modifications, or \"mods,\" that add all sorts of upgrades, features, and options for every taste. One of the most popular mods for classrooms is MinecraftEdu....</p>",
   "image":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/tlr_board/post/kidsplayingminecraftatschool.jpg",
   "grades":[
     {
@@ -661,7 +660,7 @@ curl -X GET https://graphite-api.commonsense.org/v3/education/lists/3887113?app_
 
 ### Output
 
-A <a href="#lists-object">Top Picks List object</a>.
+A <a href="#list-object">Top Picks List object</a>.
 
 
 <a name="api-boards-list"></a>
@@ -760,7 +759,7 @@ curl -X GET https://graphite-api.commonsense.org/v3/education/boards/3961626?app
 
 ### Output
 
-A <a href="#boards-object">Boards object</a>.
+A <a href="#board-object">Board object</a>.
 
 <a name="api-user-reviews-list"></a>
 GET /v3/education/user_reviews
@@ -859,8 +858,7 @@ An array of Field Note objects.
 }
 </pre>
 
-
-<a name="api-user-revews-item"></a>
+<a name="api-user-reviews-item"></a>
 GET /v3/education/user_reviews/{id}
 -----------------------------------
 
@@ -883,10 +881,10 @@ curl -X GET https://graphite-api.commonsense.org/v3/education/user_reviews/39633
 
 ### Output
 
-A <a href="#user-reviews-object">Field Note object</a>.
+A <a href="#user-review-object">Field Note object</a>.
 
 
-<a name="api-user-list"></a>
+<a name="api-users-list"></a>
 GET /v3/education/users
 -----------------------
 
@@ -958,7 +956,7 @@ An array of User objects.
 </pre>
 
 
-<a name="api-user-revews-item"></a>
+<a name="api-users-item"></a>
 GET /v3/education/users/{id}
 ----------------------------
 
