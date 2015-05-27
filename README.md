@@ -1,7 +1,7 @@
-Common Sense Media API Developer Preview (revision 1)
-=====================================================
+Common Sense Education API
+==========================
 
-This document is a preview of the Common Sense Media API version 3.  This is **NOT** official documentation and changes will be made before the official release *(Q3 2014)*.
+This document is an overview of the Common Sense Education API version 3.
 
 
 Table of Contents
@@ -9,25 +9,39 @@ Table of Contents
 
 #### Overview:
 
-* [Retrieving Resources](#api_retrieving_resources)
-* [Request Authentication](#api_request_authentication)
-* [Data Reference Population](#api_data_reference_population)
+* [Retrieving Resources](#api-retrieving-resources)
+* [Request Authentication](#api-request-authentication)
+* [Data Reference Population](#api-data-reference-population)
 
 #### Endpoints:
 
-* [GET api.commonsense.org/v3/search/products/{query}](#api_search_products) - Search for a product by title.
-* [GET api.commonsense.org/v3/users](#api_users_list) - Get a list of users.
-* [GET api.commonsense.org/v3/users/{id}](#api_users_item) - Get a spedified user.
-* [GET api.commonsense.org/v3/products](#api_products_list) - Get a list of products.
-* [GET api.commonsense.org/v3/products/{id}](#api_products_item) - Get a specified product.
-* [GET api.commonsense.org/v3/products/{product_id}/user_reviews/{platform}](#api_products_user_reviews_list) - Get a list of user reviews for a specified product on a specified platform.
-* [GET api.commonsense.org/v3/products/{product_id}/user_reviews/{platform}/{user_review_id}](#api_products_user_reviews_item) - Get a specified user review for a specified product on a specified platform.
+* [GET /v3/education/products](#api-products-list) - Get a list of products with Learning Rating review.
+* [GET /v3/education/products/{id}](#api-products-item) - Get a specified product with Learning Rating review.
+* [GET /v3/education/flows](#api-flows-list) - Get a list of Lesson Flows.
+* [GET /v3/education/flows/{id}](#api-flows-item) - Get a specified Lesson Flow.
+* [GET /v3/education/blogs](#api_blogs_list) - Get a list of blog posts.
+* [GET /v3/education/blogs/{id}](#api_blogs_item) - Get a specified blog post.
+* [GET /v3/education/lists](#api_lists_list) - Get a list of Top Picks lists.
+* [GET /v3/education/lists/{id}](#api_lists_item) - Get a specified Top Picks List.
+* [GET /v3/education/boards](#api_boards_list) - Get a list of Boards.
+* [GET /v3/education/boards/{id}](#api-boards-item) - Get a specified Board.
+* [GET /v3/education/user_reviews](#api-user-reviews-list) - Get a list of product Field Notes.
+* [GET /v3/education/user_reviews/{id}](#api-user-reivews-item) - Get a specified product Field Note.
+* [GET /v3/education/users](#api-users-list) - Get a list of users.
+* [GET /v3/education/users/{id}](#api-users-item) - Get a specified user.
+* [GET /v3/education/search/products/{query}](#api-search-products) - Search for products.
+* [GET /v3/education/search/flows/{query}](#api-search-flows) - Search for Lesson Flows.
+* [GET /v3/education/search/blogs/{query}](#api-search-blogs) - Search for Blog posts.
+* [GET /v3/education/search/lists/{query}](#api-search-lists) - Search for Top Picks lists.
+* [GET /v3/education/search/boards/{query}](#api-search-boards) - Search for Boards.
+* [GET /v3/education/search/user_reviews/{query}](#api-search-user-reviews) - Search for Field Notes.
+* [GET /v3/education/search/users/{query}](#api-search-users) - Search for users.
 
 ---
 
 # Overview
 
-<a name="api_retrieving_resources"></a>
+<a name="api-retrieving-resources"></a>
 Retrieving Resources
 --------------------
 
@@ -36,7 +50,7 @@ Retrieving resources with the HTTP GET method is as simple as GETting its URL. G
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/example/endpoint?foo=bar&hello=world&app_id=abc123&token=xyz456
+curl -X GET https://graphite-api.commonsense.org/v3/example/endpoint?foo=bar&hello=world&app_id=abc123&token=xyz456
 </pre>
 
 Possible response status codes for GET requests:
@@ -99,7 +113,7 @@ A request with an error:
 }
 </pre>
 
-<a name="api_request_authentication"></a>
+<a name="api-request-authentication"></a>
 Request Authentication
 ----------------------
 
@@ -108,268 +122,15 @@ Each REST API call is to send a valid `app_id` and `token` combination in the qu
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/products?app_id=abc123&token=xyz456
-</pre>
-
-<a name="api_data_reference_population"></a>
-Data Reference Population
--------------------------
-
-Data references can be populated from the parent data using the `populate` query parameter.  For example, a **product** references an **editorial review**.
-
-By default, the **product** data will output an internal reference ID to the **editorial and consumer reviews**:
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/products/3838031?app_id=abc123&token=xyz456
-</pre>
-
-**Output**
-
-<pre>
-{
-  "id": 3838031,
-  "title": "IXL",
-  "type": "website",
-  "reviews":
-  {
-    "educator": "53aebe89de193c5e3a409d13",
-    "consumer": "53aebea114f763613a649e1e"
-  }
-  ...
-}
-</pre>
-
-The `populate` query parameter takes the data reference that is to be populated:
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/products?populate=review.educator&app_id=abc123&token=xyz456
-</pre>
-
-**Output**
-
-<pre>
-{
-  "id": 3838031,
-  "title": "IXL",
-  "type": "website",
-  "reviews":
-  {
-    "educator": {
-      "id": 3964051,
-      "type": "learning_rating",
-      "status": 1,
-      "changed": "2014-05-14T21:35:20.000Z",
-      "created": "2014-05-14T19:48:00.000Z",
-      "good_for_learning": "<p>The targeted activities -- pretty much drill and practice in format and approach -- can provide extensive opportunities for independent practice. For example, at sixth grade you get an impressive 277 types of math-skill practice activities. Unlike many sites where students do drills, though, this one gives feedback on how to get better. Overall, IXL's limit is its drill and practice. However, it gives students the tools they need to improve in math and build confidence.</p>\n",
-      ...
-      },
-      "consumer": "53aebea114f763613a649e1e"
-    }
-  }
-  ...
-}
-</pre>
-
-The data reference can also be auto-populated using only the `fields` query parameter:
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/products?fields=id,title,reviews.educator.id, review.educator.type&app_id=abc123&token=xyz456
-</pre>
-
-**Output**
-
-<pre>
-{
-  "id": 3838031,
-  "title": "IXL",
-  "reviews":
-  {
-    "educator":
-    {
-      "id": 3964051,
-      "type": "learning_rating",
-    }
-  }
-  ...
-}
+curl -X GET https://graphite-api.commonsense.org/v3/education/products?app_id=abc123&token=xyz456
 </pre>
 
 ---
 # Endpoints
 
-<a name="api_search_products"></a>
-GET api.commonsense.org/v3/search/products/{query}
---------------------------------------------------
-
-Search for a product by title.
-
-### Path Parameters
-
-* `query` - The search string.
-
-### Query Parameters
-
-* `type` - The type of product to filter by.
-  * default: *all data fields*
-  * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
-* `limit` - The number of records to be outputted per page.
-  * default: `10`
-
-### Example
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/search/products/math?type=app&app_id=abc123&token=xyz456
-</pre>
-
-### Output
-The an array of product search results.
-
-<pre>
-[
-  {
-    "type": "app",
-    "title": "Math Evolve: A Fun Math Game",
-    "id": 4839366
-  },
-  {
-      "type": "app",
-      "title": "Let's do the math",
-      "id": 2336731
-  },
-  {
-      "type": "app",
-      "title": "Math Bumpies - Adventure on Math Island: Addition and Subtraction",
-      "id": 1245518
-  },
-  ...
-  ]
-</pre>
-
-
-<a name="api_users_list"></a>
-GET api.commonsense.org/v3/users
---------------------------------
-
-Get a list of users.
-
-### Query Parameters
-
-* `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
-* `page` - The page offset of the data set.
-  * default: `1`
-* `limit` - The number of records to be outputted per page.
-  * default: `10`
-* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
-  * default: `-created` *(decending)*
-
-### Example
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/users?app_id=abc123&token=xyz456
-</pre>
-
-### Output
-The an array of user data.
-
-<pre>
-  [
-    {
-      "id": 1234567,
-      "username": "jane",
-      "mail": "jane.doe@example.com",
-      "created": "2014-04-23T16:40:01.000Z",
-      "last_login": "2013-02-22T20:19:00.000Z",
-      "status": 1,
-      ...
-    },
-    {
-      "id": 7654321,
-      "username": "john",
-      "mail": "john.doe@example.com",
-      "created": "2014-04-23T16:40:01.000Z",
-      "last_login": "2013-02-22T20:19:00.000Z",
-      "status": 1,
-      ...
-    },
-    ...
-  ]
-</pre>
-
-
-<a name="api_users_item"></a>
-GET api.commonsense.org/v3/users/{id}
--------------------------------------
-
-Get a spedified user.
-
-### Path Parameters
-
-* `id` - The system ID of a user.
-
-### Query Parameters
-
-* `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
-
-### Example
-
-<pre>
-curl -X GET http://api.commonsense.org/v3/users/1234567?app_id=abc123&token=xyz456
-</pre>
-
-### Output
-
-Sample data of all the fields for a user:
-
-<pre>
-{
-  "id": 1234567,
-  "username": "jane",
-  "mail": "jane.doe@example.com",
-  "created": "2014-04-23T16:40:01.000Z",
-  "last_login": "2013-02-22T20:19:00.000Z",
-  "status": 1,
-  "bio": "<p>I'm a mom, a wife, en educator, a technology geek, and most recently, a technology teacher at my school. I LOVE the constant action and the always changing aspects involved in being in my room. I teach 29 classes per week, grades K-5, aligned to the ReadyGen Curriculum adopted by the DOE this year. My students use Kidspiration, KidPix, Word, Power Point, and many web based programs to create products aligned to our CCSS teaching points on MacBooks.</p>\n",
-  "profile_picture": "http://cdn2.ec.graphite.org/sites/default/files/styles/tlr-thumbnail-large/public/user-pictures/1234567-user-picture.jpg?itok=CnpM2dnU",
-  "first_name": "Jane",
-  "last_name": "Doe",
-  "display_name": "Jane D.",
-  "role_title": "Other",
-  "profile_url": "/users/jane",
-  "is_homeschooler": false,
-  "is_educator": true,
-  "is_parent": false,
-  "is_expert_educator": false,
-  "is_fully_registered": true,
-  "is_admin": false,
-  "grades": [
-    {
-      "id": 21927,
-      "name": "K"
-    },
-    {
-      "id": 21928,
-      "name": "1"
-    }
-  ],
-  "subjects": [
-    {
-      "id": 19647,
-      "name": "Math"
-    },
-    {
-      "id": 19648,
-      "name": "Science"
-    }
-  ]
-}
-</pre>
-
-
-<a name="api_products_list"></a>
-GET api.commonsense.org/v3/products
------------------------------------
+<a name="api-products-list"></a>
+GET /v3/education/products
+--------------------------
 
 Get a list of products.
 
@@ -379,9 +140,6 @@ Get a list of products.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
   * default: *all data fields*
-* `populate` - A comma separated list of fields that reference a data set *(see [Data Reference Population](#api_data_reference_population))*.
-  * default: *none*
-  * references: `reviews.educator`, `reviews.consumer`
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -392,50 +150,162 @@ Get a list of products.
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/products?app_id=abc123&token=xyz456
+curl -X GET https://graphite-api.commonsense.org/v3/education/products?app_id=abc123&token=xyz456
 </pre>
 
 ### Output
+An array of product objects.
+
+<a name="product-object"></a>
+### Product Object Sample
 
 <pre>
-[
-  {
-    "id": 3838031,
-    "title": "IXL",
-    "type": "website",
-    "changed": "2014-04-23T16:40:01.000Z",
-    "created": "2013-02-22T20:19:00.000Z",
-    "image": "https://d2e111jq13me73.cloudfront.net/sites/default/files/product-images/csm-website/ixl-website.png",
-    "status": 1,
-    "author": "53aebeaa3c1c97643a7656c5",
-    "reviews":
+{
+  "id":1247882,
+  "title":"Minecraft",
+  "status":1,
+  "type":"game",
+  "created":"2011-04-12T16:51:00.000Z",
+  "changed":"2015-01-12T23:30:17.000Z",
+  "user_id":284418,
+  "url":"https://www.graphite.org/node/1247882",
+  "image":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/experience-media-file/minecraft_0_0.jpg",
+  "release_date":"2011-04-11T07:00:00.000Z",
+  "price":"21.00",
+  "pricing_details":null,
+  "subscription_price":null,
+  "esrb_explanation":"Fantasy Violence",
+  "platforms":[
     {
-      "educator": "53aebe89de193c5e3a409ee1",
-      "consumer": "53aebe89de193c5e3a409ee4"
-    }
+      "name":"Linux",
+      "parent_id":0,
+      "id":3996
+    },
+    ...
+  ],
+  "esrb_ratings":[
+    {
+      "name":"E10+",
+      "parent_id":0,
+      "id":3877
+    },
+    ...
+  ],
+  "pricing_structure":[
+    {
+      "name":"Paid",
+      "parent_id":0,
+      "id":19599
+    },
+    ...
+  ],
+  "awards":[],
+  "publisher":{
+    "parent_tid":0,
+    "name":"Mojang",
+    "tid":4593
   },
-  {
-    "id": 1247882,
-    "title": "Minecraft",
-    "type": "game",
-    "changed": "2014-04-23T16:40:01.000Z",
-    "created": "2013-02-22T20:19:00.000Z",
-    "image": "https://d2e111jq13me73.cloudfront.net/sites/default/files/product-images/csm-game/mine-box.jpg",
-    "status": 1,
-    "author": "53aebe89de193c5e3a409ee5",
-    "reviews":
+  "genre":{
+    "parent_tid":0,
+    "name":"Adventure",
+    "tid":3868
+  },
+  "screenshots":[
+    "https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/screenshots/csm-game/mine.jpg",
+    "https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/screenshots/csm-game/mine-2.jpg",
+    "https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/screenshots/csm-game/mine1.jpg"
+  ],
+  "available_on":[],
+  "common_core_english":[],
+  "common_core_math":[],
+  "grades":[
     {
-      "educator": "53aebe8cde193c5e3a409f58",
-      "consumer": "53aebeaa3c1c97643a765627"
-    }
+      "name":"3",
+      "parent_id":0,
+      "id":21930
+    },
+    ...
+  ],
+  "population":[
+    {
+      "name":"General",
+      "parent_id":0,
+      "id":21958
+    },
+    ...
+  ],
+  "purpose":[
+    {
+      "name":"Knowledge gain",
+      "parent_id":0,
+      "id":21948
+    },
+    ...
+  ],
+  "skills":[
+    {
+      "name":"Communication & Collaboration",
+      "parent_id":0,
+      "id":19651
+    },
+    ...
+  ],
+  "subjects":[],
+  "review":{
+    "privacy_information":[],
+    "learning_rating":5,
+    "tags":"storytelling, geometry, shapes, ecosystems, geology, substance properties, citizenship, geography, coding, digital creation, playing, sculpture, game design, project-based learning ",
+    "is_subreview":false,
+    "is_coming_soon":false,
+    "good_for_learning":"<p>Since each new world begs to be explored and reshaped, <em>Minecraft</em> cultivates 21<sup>st</sup>-century skills: goal-setting, collaboration, creativity, design and systems thinking, and engineering. Teachers should be aware, however, that the game’s emphasis on open creation, collaboration, and communication also means that students playing together can get into conflicts or get distracted and off task. If framed less as a problem and more as an opportunity, these issues can be made into powerful learning experiences that guide students toward successful and respectful collaboration.</p>\n",
+    "what_kids_learn":null,
+    "what_is_story":"<p><em>Minecraft</em> can be adapted to fit nearly any objective or subject, with lessons lasting as short as one period or the entire year. The game is so engrossing that students are likely to work long hours on projects both at home and school, so be wary of time management as well as issues -- like griefing -- that may arise from at-home and potentially unsupervised use. While playing in class, teachers can help students negotiate norms, roles, and responsibilities, and foster trust and a sense of consequence for individuals’ actions in community.</p>\n<p>Students can use <em>Minecraft </em>as a portfolio, creating structures and systems that model topics or concepts covered in class. In a math classroom, students can tackle problems using a set number of blocks (the basic unit of <em>Minecraft</em>) or calculate area and volume. For writing practice, students can keep explorers’ journals or compare and contrast the biomes and geologies of their <em>Minecraft</em> worlds with those of their home states.</p>\n",
+    "learning_rating_total":5,
+    "author":{
+      "id":1855701,
+      "name":"Chad Sansing",
+      "bio":"<p>I teach language arts at a traditional, &quot;micropolitan&quot; middle school in Staunton, Virginia.</p>\n<p>I believe in making stuff with kids as a pathway to reading, writing, and problem-solving in community. I am co-founder and moderator of the collaborative progressive education blog CoöpCatalyst and I recently began work on #nerdcamp, which offers teachers peer-to-peer and student-mentored professional development in new media. I am a National Board Certified Teacher in early adolescence English/language Arts, a NETS*T certified teacher, a Mozilla Webmaker Mentor, and a National Writing Project teacher consultant and connected learning ambassador. I blog about make/hack/play education on my webpage, Classroots.org, and as a guest at sites like the National Writing Project&#039;s Digital Is.</p>\n<p>I live in central Virginia with my wife, our two kids, our two cats, and eight (so far) fish. When I&#039;m not teaching or blogging about education, I&#039;m noodling around with code, playing with the kids, or enjoying their soccer games.</p>\n",
+      "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/1855701-user-picture.jpg",
+      "first_name":"Chad ",
+      "last_name":"Sansing",
+      ...
+    },
+    "tech_notes":"To download, players must register an account with Mojang (the game’s publisher). This registration requires an email.  The game downloads and installs in five minutes and requires the latest version of Java.  ",
+    "teachers_need_to_know":"<p><em>Minecraft</em> is a sandbox game that rewards players for collecting and combining resources into new, useful items that enrich gameplay and help further exploration and creativity. Although it has an “End” zone for players who want to fight the game’s boss (a dragon), <em>Minecraft</em> has no plot -- the story is up to the player to define. Depending on what the player chooses to build, they’ll task themselves with collecting specific resources necessary to craft items that can help them build cooler and/or more useful things, or explore. Each completed project inevitably leads to a new one with new resource and item needs, sending the player deeper into the world. Selecting Creative Mode, as opposed to the default Survival Mode, removes the need to collect resources as well as the monsters and health and hunger meters, allowing players to build easily and in peace. Creative Mode is probably best for younger students who might get too distracted by monsters or lessons requiring complex builds in a short amount of time.</p>\n<p>To get started, players create accounts on <a href=\"http://www.minecraft.net\" target=\"_blank\">Minecraft.net</a>, purchase a license, and then download and install the game. Players can create a brand-new unique world on their own or join other people’s worlds (via local area network or hosted servers), fulfilling both solitary and social players. The controls are typical of first-person games using a combination of the mouse and WASD keys.</p>\n",
+    "one_liner":"Spiraling sandbox of adventure and creation gets kids to dig deep",
+    "learning_approach_rating":5,
+    "learning_approach_description":"<p>Design thinking, problem solving, and resilience will stay with students, but specific content-knowledge transfer is dependent on how classes use the game.</p>\n",
+    "how_parents_help":null,
+    "how_kids_learn":null,
+    "help_rating":4,
+    "help_description":"<p>Lacking a built-in tutorial or manual, &lt;i&gt;Minecraft&lt;/i&gt; can be intimidating, but this also promotes peer learning both among students and the larger online community.</p>\n",
+    "engagement_rating":5,
+    "engagement_description":"<p>Students have free reign over one-of-a-kind worlds bolstered by deep customization options and frequent updates that add new challenges and content.</p>\n",
+    "educational_intent":0,
+    "bottom_line":"An irresistible and seemingly limitless incubator for 21st-century skills that, with a little guidance, can chart new courses for learning.",
+    "cons":"Open world can lead to power struggles and community problems without a shared code of conduct.",
+    "pros":"Delivers open, creative, and purposeful play supported by frequent updates.",
+    "user_rating_count":13,
+    "user_rating_average":4.15,
+    "admin_tools":"<p>N/A</p>\n",
+    "consumer_product_id":1247882,
+    "product_id":1247882,
+    "url":"https://www.graphite.org/game/minecraft",
+    "user_id":1855701,
+    "changed":"2015-04-13T18:17:23.000Z",
+    "created":"2012-03-30T00:03:00.000Z",
+    "type":"learning_rating",
+    "status":1,
+    "title":"Minecraft",
+    "id":2864106
   }
-]
+}
 </pre>
 
 
-<a name="api_products_item"></a>
-GET api.commonsense.org/v3/products/{id}
----------------------------------------
+<a name="api-products-item"></a>
+GET /v3/education/products/{id}
+-------------------------------
 
 Get a specified product.
 
@@ -447,64 +317,29 @@ Get a specified product.
 
 * `fields` - A comma separated list of fields to be outputted.
   * default: *all data fields*
-* `populate` - A comma separated list of fields that reference a data set *(see [Data Reference Population](#api_data_reference_population))*.
-  * default: *none*
-  * references: `reviews.educator`, `reviews.consumer`
-* `page` - The page offset of the data set.
-  * default: `1`
-* `limit` - The number of records to be outputted per page.
-  * default: `10`
-* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
-  * default: `-created` *(decending)*
 
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/products/3838031?app_id=abc123&token=xyz456
+curl -X GET https://graphite-api.commonsense.org/v3/education/products/1247882?app_id=abc123&token=xyz456
 </pre>
 
 ### Output
 
-Sample data of all the fields for a product:
+A <a href="#product-object">product object</a>.
 
-<pre>
-{
-  "id": 3838031,
-  "title": "IXL",
-  "type": "website",
-  "changed": "2014-04-23T16:40:01.000Z",
-  "created": "2013-02-22T20:19:00.000Z",
-  "image": "https://d2e111jq13me73.cloudfront.net/sites/default/files/product-images/csm-website/ixl-website.png",
-  "status": 1,
-  "author": "53aebeaa3c1c97643a7656c5",
-  "reviews":
-  {
-    "educator": "53aebe89de193c5e3a409ee1",
-    "consumer": "53aebe89de193c5e3a409ee4"
-  }
-}
-</pre>
+<a name="api-flows-list"></a>
+GET /v3/education/flows
+-----------------------
 
-
-<a name="api_products_user_reviews_list"></a>
-GET api.commonsense.org/v3/products/{product_id}/user_reviews/{platform}
-----------------------------------------------------------------
-
-Get a list of user reviews for a specified product on a specified platform.
-
-### Path Parameters
-
-* `product_id` - The system ID of a product.
-* `platform` - The Common Sense platform to retrieve the reviews from.
-  * values: `consumer` or `educator`
+Get a list of Lesson Flows.
 
 ### Query Parameters
 
+* `ids` - A comma separated list of Lesson Flow IDs to be retrieved.
+  * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
   * default: *all data fields*
-* `populate` - A comma separated list of fields that reference a data set *(see [Data Reference Population](#api_data_reference_population))*.
-  * default: *none*
-  * references: `product`, `author`
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -515,64 +350,117 @@ Get a list of user reviews for a specified product on a specified platform.
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/products/3838031/user_reviews/educator?app_id=abc123&token=xyz456
+curl -X GET https://graphite-api.commonsense.org/v3/education/flows?app_id=abc123&token=xyz456
 </pre>
 
 ### Output
 
-Sample data for a `educator` user review for a product
+An array of Lesson Flow objects.
+
+<a name="lesson-flow-object"></a>
+### Lesson Flow Object Sample
 
 <pre>
 [
   {
-    "id": 3894561,
-    "title": "Excellent website for skills-based math practice",
-    "status": 1,
-    "type": "field_note",
-    "changed": "2014-04-23T16:40:01.000Z",
-    "created": "2013-02-22T20:19:00.000Z",
-    "engagement_rating": 4,
-    "pedagogy_rating": 4,
-    "author": "53aebe89de193c5e3a409d26",
-    "product": "53aebea114f763613a649e19",
-    ...
-  },
-  {
-    "id": 2847427,
-    "title": "An endless supply of math challenges for students",
-    "status": 1,
-    "type": "field_note",
-    "changed": "2014-04-23T16:40:01.000Z",
-    "created": "2013-02-22T20:19:00.000Z",
-    "engagement_rating": 5,
-    "pedagogy_rating": 4,
-    "author": "53aebea114f763613a649e30",
-    "product": "53aebea114f763613a649e19",
-    ...
+    "id":3898001,
+    "title":"Polygons",
+    "status":1,
+    "type":"flow",
+    "created":"2013-09-17T17:28:00.000Z",
+    "changed":"2015-03-10T23:58:40.000Z",
+    "user_id":1536766,
+    "url":"https://www.graphite.org/lesson-flows/polygons",
+    "description":"An introduction to some basic geometric figures and their place in the real world",
+    "subjects":[
+      {
+        "name":"Math",
+        "parent_id":0,
+        "id":19647
+      },
+      ...
+    ],
+    "grades":[
+      {
+        "name":"3",
+        "parent_id":0,
+        "id":21930
+      },
+      ...
+    ],
+    "usefulness":0,
+    "components":[
+      {
+        "title":"Direct Instruction",
+        "description":"<p>Use <strong>BrainPOP’s “<em>Polygons</em>”</strong> video to begin outlining today’s discussion. Next, define the characteristics of a “polygon”:</p>\n<p><em>Polygon</em> –</p>\n<ul><li>Has at least 3 sides (known as line segments or edges) and angles</li>\n<li>Is a closed plane (2D) figure</li>\n<li>Has straight line segments (no curves!)</li>\n</ul><p>Draw three basic polygons as examples (a triangle and two quadrilaterals) and three non-polygons (circle, key shape, heart). Ask student to vote as to whether each shape fulfills the criteria outlined in the definition of a polygon. Begin categorizing the polygon examples you drew by number of sides, and continue: trigon/triangle, tetragon/quadrilateral, pentagon, hexagon, heptagon/septagon, octagon, enneagon/nonagon, decagon. Where possible, highlight examples of each type of polygon found in the real world (triangle = pizza slice, pentagon = home plate, octagon = stop sign). Introduce new math terminology by discussing how polygons are classified: regular v. irregular, simple v. complex (self-intersecting), convex v. concave.</p>\n<p>(Other related vocabulary: vertex/vertices, edge, line segment, angle, equilateral, equiangular)</p>\n",
+        "instructions":"",
+        "products":[
+          {
+            "id":3588336,
+            "title":"BrainPop",
+            "status":1,
+            "type":"website",
+            "created":"2012-11-13T02:01:32.000Z",
+            "changed":"2015-01-12T18:25:46.000Z",
+            ...
+          }
+        ],
+        "activity":[],
+        "activity_other":null
+      },
+      ...
+    ],
+    "author":{
+      "id":1536766,
+      "bio":"<p>My current role at Common Sense as director of digital learning melds my love of instructional design, writing, and the ever-changing ed-tech world. I have taught in Los Angeles and New York City public schools for over ten years, and I have worked for education-focused media companies such as Nickelodeon, IMAX, EdSurge, and Discovery Education. I'm passionate about creative curriculum development that will push the boundaries of current pedagogy.</p>\n",
+      "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/1536766-user-picture.jpg",
+      "first_name":"Darri",
+      "last_name":"Stephens",
+      ...
+    }
   },
   ...
 ]
 </pre>
 
 
-<a name="api_products_user_reviews_item"></a>
-GET api.commonsense.org/v3/products/{product_id}/user_reviews/{platform}/{user_review_id}
------------------------------------------------------------------------------------------
+<a name="api-flows-item"></a>
+GET /v3/education/flows/{id}
+----------------------------
 
-Get a specified user review for a specified product on a specified platform.
+Get a specified Lesson Flow.
 
 ### Path Parameters
 
-* `product_id` - The system ID of a product.
-* `user_review_id` - The system ID of a user review.
+* `id` - The system ID of a Lesson Flow.
 
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
   * default: *all data fields*
-* `populate` - A comma separated list of fields that reference a data set *(see [Data Reference Population](#api_data_reference_population))*.
-  * default: *none*
-  * references: `product`, `author`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/flows/3898001?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+A <a href="#lesson-flow-object">Lesson Flow</a> object.
+
+<a name="api-blogs-list"></a>
+GET /v3/education/blogs
+--------------------------
+
+Get a list of blog posts.
+
+### Query Parameters
+
+* `ids` - A comma separated list of blog IDs to be retrieved.
+  * default: all records returned.
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -583,50 +471,720 @@ Get a specified user review for a specified product on a specified platform.
 ### Example
 
 <pre>
-curl -X GET http://api.commonsense.org/v3/products/3838031/user_reviews/3894561?app_id=abc123&token=xyz456
+curl -X GET https://graphite-api.commonsense.org/v3/education/blogs?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+An array of blog post objects.
+
+<a name="blog-object"></a>
+### Blog Post Object Sample
+
+<pre>
+{
+  "id":3899826,
+  "title":"Minecraft or MinecraftEdu at School? Pros, Cons, and What it's Great For",
+  "status":1,
+  "type":"blog",
+  "created":"2013-09-25T04:52:00.000Z",
+  "changed":"2014-09-30T22:10:01.000Z",
+  "user_id":1855701,
+  "url":"https://www.graphite.org/blog/minecraft-or-minecraftedu-at-school-pros-cons-and-what-its-great-for",
+  "subheader":null,
+  "body":"<p>One of the great things about Minecraft is that there's not just one version. It exists as a stand-alone game, but creative players also create modifications, or \"mods,\" that add all sorts of upgrades, features, and options for every taste. One of the most popular mods for classrooms is MinecraftEdu.</p>\n<p>Since it's targeted at classrooms, teachers may be tempted to ignore <a href=\"/game/minecraft\">Minecraft</a> and head straight for <a href=\"/game/minecraftedu\">MinecraftEdu</a> -- but not so fast!</p>\n<p>Both Minecraft and MinecraftEdu can serve as great learning tools. So which version is right for you and your classroom? Consult this list of pros, cons, and suggestions to make your decision.</p>\n<p>Photo by <a href=\"http://www.flickr.com/photos/jasongraham99/9123836897\" target=\"_blank\">Jason Graham</a></p>\n<p><img alt=\"\" src=\"/sites/default/files/styles/galleryformatter_slide/public/experience-media-file/sansing_csm_minecraft_pic_5.jpg?itok=tcKR_AsV\" style=\"width: 500px; height: 293px;\" /></p>\n<h2><a href=\"/game/minecraft\"><strong>Minecraft</strong></a></h2>\n<h4><strong>Pros:</strong></h4>\n<ul><li>Preserves a sense of open-ended play and exploration.</li>\n<li>Teachers and students play as peers.</li>\n<li>Feels less like school and more like play.</li>\n<li>Student-directed.</li>\n<li>Gameplay possibilities grow directly with players' abilities.</li>\n<li>Kids can easily open games for multi-player group work over local area networks.</li>\n<li>Open to any available mod, character skin, or texture pack.</li>\n<li>Opens the door to programming.</li>\n</ul><h4><strong>Cons:</strong></h4>\n<ul><li>Each installation can be different depending on how players modify it, so not every game will work with others.</li>\n<li>Students will likely be doing vastly different things with the game depending on what they've learned to do with it and to it.</li>\n<li>Students are largely responsible for guarding the safety of their worlds and determining who can and can't play with them or see and assess their work.</li>\n</ul><h4><strong>Great for:</strong></h4>\n<ul><li>Students who already have Minecraft accounts.</li>\n<li>Individual and small group projects.</li>\n<li>Clubs</li>\n<li>Self-starting and goal-driven students</li>\n</ul><p><img alt=\"\" src=\"/sites/default/files/styles/galleryformatter_slide/public/experience-media-file/minecraftedu1.jpg?itok=X6tZCbxC\" style=\"width: 500px; height: 281px;\" /></p>\n<h2><a href=\"/game/minecraftedu\"><strong>MinecraftEdu</strong></a></h2>\n<h4><strong>Pros:</strong></h4>\n<ul><li>Excellent tutorial for first time players.</li>\n<li>Classroom management tools make wrangling students and setting up lessons much easier.</li>\n<li>Assignments (and entire maps) can be easily created, assigned, and monitored.</li>\n<li>MinecraftEdu purchase bundles classroom licenses and mods making it an all-in-one purchase, and allowing student and teacher work to be archived and preserved.</li>\n<li>All players in a MinecraftEdu game play the same version of the game with the same mods, reducing compatibility issues in multiplayer games.</li>\n</ul><h4><strong>Cons:</strong></h4>\n<ul><li>Heavily teacher controlled world means some sense of wonder and exploration are lost.</li>\n<li>Some mods can't be used by students, closing off some creative possibilities and valuable skills gains.</li>\n<li>Students, especially those familiar with the game, may feel a bit handcuffed.</li>\n</ul><h4><strong>Great for:</strong></h4>\n<ul><li>Delivering specific pieces of learning content.</li>\n<li>Whole-class lessons and projects.</li>\n<li>Students without existing access to Minecraft.</li>\n<li>Teachers, schools, and divisions looking to dip a toe into participatory or game-based learning.</li>\n</ul><p>Most importantly, you can't go wrong with either version; Minecraft -- no matter the flavor -- is an investment in the best kind of edtech -- the kind that gets kids making and creating meaning. Do you use Minecraft or MinecraftEdu with your students? Which would you recommend, and why?</p>\n<h3>See what other teachers are saying about Minecraft:</h3>\n<p><a href=\"/game/minecraft-teacher-review/3889538\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/default_images/missing_teacher-blue_0.png?itok=vY6dpHhY\" style=\"width: 64px; height: 64px;\" /></a><a href=\"/game/minecraft-teacher-review/3889515\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/user-pictures/1914816-user-picture.jpg?itok=3k38zOCC\" style=\"width: 64px; height: 64px;\" /></a><a href=\"/game/minecraft-teacher-review/3871506\"><img alt=\"\" src=\"/sites/default/files/styles/tlr-thumbnail/public/user-pictures/1858226-user-picture.jpg?itok=7rkWJzuF\" style=\"width: 64px; height: 64px;\" /></a>  </p>\n<h3><a href=\"/node/add/tlr-field-note?field_reference_learning_rating=2897906\">Be the first educator to write a Field note about MinecraftEdu.</a></h3>\n<h3>New to Minecraft? Here are the basics:</h3>\n<p><a href=\"https://minecraft.net/\" target=\"_blank\">Minecraft</a> is a sandbox game that rewards players for collecting and combining resources into new, useful items that enrich gameplay and help further exploration and creativity. Although it has an “End” zone for players who want to fight the game’s boss (a dragon), Minecraft has no plot -- the story is up to the player to define. Depending on what the player chooses to build, they’ll task themselves with collecting specific resources necessary to craft items that can help them build cooler and/or more useful things, or explore. Each completed project leads to a new one, sending the player deeper into the world. </p>\n<p>Minecraft can be played in one of two modes: Creative Mode and Survival Mode. Creative Mode removes the need to collect resources as well removes monsters, as well as health and hunger meters, allowing players to build easily and in peace. Minecraft is available on several platforms as well. </p>\n<p>You can buy <a href=\"https://minecraft.net/store\" target=\"_blank\">Minecraft for PC/Mac</a>. Minecraft: Pocket Edition is available for <a href=\"https://itunes.apple.com/en/app/minecraft-pocket-edition/id479516143\" target=\"_blank\">iOS</a> and <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe&amp;hl=en\" target=\"_blank\">Android</a>, and Minecraft: Xbox 360 Edition is available on the <a href=\"http://marketplace.xbox.com/en-GB/Product/Minecraft-Xbox-360-Edition/66acd000-77fe-1000-9115-d802584111f7\" target=\"_blank\">XBLA Marketplace</a>. <a href=\"http://minecraftedu.com/page/\">MinecraftEdu</a> is a collaboration between a group of educators and the game developer and enables teacherse to purchase copies of the game at a reduced cost.</p>\n<p> </p>\n",
+  "image":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/tlr_board/post/kidsplayingminecraftatschool.jpg",
+  "grades":[
+    {
+      "name":"3",
+      "parent_id":0,
+      "id":21930
+    },
+    ...
+  ],
+  "subjects":[],
+  "skills":[],
+  "topics":[
+    {
+      "tid":21975,
+      "name":"Tools",
+      "parent_tid":0
+    },
+    ...
+  ],
+  "post_types":[
+    {
+      "name":"Tech Sketch",
+      "parent_id":0,
+      "id":21972
+    },
+    ...
+  ],
+  "author":{
+    "id":1855701
+    "bio":"<p>I teach language arts at a traditional, &quot;micropolitan&quot; middle school in Staunton, Virginia.</p>\n<p>I believe in making stuff with kids as a pathway to reading, writing, and problem-solving in community. I am co-founder and moderator of the collaborative progressive education blog CoöpCatalyst and I recently began work on #nerdcamp, which offers teachers peer-to-peer and student-mentored professional development in new media. I am a National Board Certified Teacher in early adolescence English/language Arts, a NETS*T certified teacher, a Mozilla Webmaker Mentor, and a National Writing Project teacher consultant and connected learning ambassador. I blog about make/hack/play education on my webpage, Classroots.org, and as a guest at sites like the National Writing Project&#039;s Digital Is.</p>\n<p>I live in central Virginia with my wife, our two kids, our two cats, and eight (so far) fish. When I&#039;m not teaching or blogging about education, I&#039;m noodling around with code, playing with the kids, or enjoying their soccer games.</p>\n",
+    "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/1855701-user-picture.jpg",
+    "first_name":"Chad",
+    "last_name":"Sansing",
+    ...
+  }
+}
+</pre>
+
+
+<a name="api-blogs-item"></a>
+GET /v3/education/blogs/{id}
+-------------------------------
+
+Get a specified blog post.
+
+### Path Parameters
+
+* `id` - The system ID of a blog post.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/blogs/3899826?app_id=abc123&token=xyz456
 </pre>
 
 ### Output
 
-Sample data of all the fields for a user review:
+A <a href="#blog-object">blog post object</a>.
+
+<a name="api-lists-list"></a>
+GET /v3/education/lists
+--------------------------
+
+Get a list of Top Picks lists.
+
+### Query Parameters
+
+* `ids` - A comma separated list of Top Pick List IDs to be retrieved.
+  * default: all records returned.
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
+  * default: `-created` *(decending)*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/lists?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+An array of Top Pick List objects.
+
+<a name="list-object"></a>
+### Top Picks List Object Sample
 
 <pre>
 {
-  "id": 3894561,
-  "title": "Excellent website for skills-based math practice",
-  "status": 1,
-  "type": "field_note",
-  "changed": "2014-04-23T16:40:01.000Z",
-  "created": "2013-02-22T20:19:00.000Z",
-  "engagement_rating": 4,
-  "pedagogy_rating": 4,
-  "support_rating": 5,
-  "learning_rating": 4,
-  "setup_time": "5-15 minutes",
-  "reviews": "<p>IXL is a great website for learning and practicing math skills at all levels. My school recently purchased a license and my class has used the website extensively. I use it for 2 primary purposes: to reinforce recently taught skills in a computer lab and for follow up homework. My students enjoy the skills and always strive to earn a score of 100 (skill mastered). They also enjoy earning badges as they progress through their 4th grade skills. After a few months, I wonder if they will tire of the repetition, but the practice is superb.</p>\n",
-  "experience": "<p>I use IXL for homework and for reinforcing skills recently taught. I really like the detailed reports IXL provides. They give me the ability to check student progress.</p>\n",
-  "purpose": [
+  "id":3887113,
+  "title":"Best Tech Creation Tools",
+  "status":1,
+  "type":"top_picks",
+  "created":"2013-03-26T21:03:00.000Z",
+  "changed":"2015-05-02T04:52:41.000Z",
+  "user_id":343980,
+  "url":"https://www.graphite.org/top-picks/best-tech-creation-tools",
+  "teaser":"Put a personal spin on learning through invention.",
+  "overview":null,
+  "sections":[
     {
-      "id": 21950,
-      "name": "Further application"
-    },
-    {
-      "id": 21957,
-      "name": "Homework"
+      "title":null,
+      "products":[
+        {
+          "id":1242472,
+          "title":"Scratch",
+          "status":1,
+          "type":"website",
+          "created":"2011-02-08T20:39:34.000Z",
+          "changed":"2015-03-13T17:11:27.000Z",
+          ...
+        },
+        ...
+      ]
     }
   ],
-  "population": [
+  "skills":[
     {
-      "id": 21962,
-      "name": "Advanced learners"
+      "name":"Communication & Collaboration",
+      "parent_id":0,
+      "id":19651
     },
-    {
-      "id": 21958,
-      "name": "General"
-    }
+    ...
   ],
-  "author": "53aebea014f763613a649c97",
-  "product": "53aebe7ede193c5e3a40988d"
+  "grades":[],
+  "subjects":[],
+  "author":{
+    "id":343980,
+    "bio":"<p>As Common Sense Education's senior director of education content, Shira is responsible for the strategic direction and overall quality of content on Common Sense Education's Graphite (<a href=\"http://www.graphite.org\">www.graphite.org</a>). Graphite is an innovative platform for PreK-12 teachers with independent ratings and reviews of EdTech. Previously, Shira oversaw the direction and operations of Common Sense's app, website, and game channels and project managed the research and creation of our K-12 digital literacy and citizenship curriculum and companion online interactive elements. Shira has also managed research projects on digital learning, school reform, and social emotional development. More generally, Shira is interested in seeding innovative approaches to learning. Creation games like <i>Minecraft</i> and offbeat TV comedies like <i>Arrested Development</i> occupy far too much of Shira's time. She holds a doctorate degree from the Harvard Graduate School of Education and a bachelor's in English from the University of Michigan.<br /><a href=\"https://plus.google.com/117799627444797092612/posts\" rel=\"me\">Google+</a></p>\n",
+    "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/343980-user-picture.jpg",
+    "first_name":"Shira Lee",
+    "last_name":"Katz",
+    ...
+  },
 }
 </pre>
 
+
+<a name="api-lists-item"></a>
+GET /v3/education/lists/{id}
+-------------------------------
+
+Get a specified Top Picks List post.
+
+### Path Parameters
+
+* `id` - The system ID of a Top Picks List.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/lists/3887113?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+A <a href="#lists-object">Top Picks List object</a>.
+
+
+<a name="api-boards-list"></a>
+GET /v3/education/boards
+--------------------------
+
+Get a list of Boards.
+
+### Query Parameters
+
+* `ids` - A comma separated list of Board IDs to be retrieved.
+  * default: all records returned.
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
+  * default: `-created` *(decending)*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/boards?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+An array of Board objects.
+
+<a name="board-object"></a>
+### Board Object Sample
+
+<pre>
+{
+  "id":3961626,
+  "title":"Writing, Storytelling, Self-Publishing",
+  "status":1,
+  "type":"board",
+  "created":"2014-05-07T19:07:43.000Z",
+  "changed":"2014-05-07T19:37:37.000Z",
+  "user_id":1473181,
+  "url":"https://www.graphite.org/users/erin-wilkey-oh/boards/writing-storytelling-self-publishing",
+  "description":"",
+  "notes":null,
+  "grades":[],
+  "subjects":[],
+  "posts":[
+    {
+      "id":3894861,
+      "title":"Write About This",
+      "status":1,
+      "type":"csm_learning_rating",
+      "created":1378311360,
+      "changed":1428466637,
+      "user_id":1746446,
+      "url":"https://www.graphite.org/app/write-about-this",
+      "description":"Fun pictures and prompts are great for getting kids to start writing",
+      "image":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/experience-media-file/screen_shot_2015-03-21_at_5.04.41_pm.png",
+      "post_type":"learning_rating"
+    },
+    ...
+  ],
+  "author":{
+    "id":1473181,
+    "bio":"<p>Before joining Common Sense Education as senior editor of education reviews, Erin spent several years teaching English for non-native speakers at a community college and 11th/12th-grade English at an urban public high school. Her school district&#039;s 1:1 laptop program sparked her interest in what teaching and learning could look like in a connected classroom. Erin has bachelor&#039;s degrees in English and secondary education and a master&#039;s degree in instructional design and technology. She also explored the educational potential of new media as a writer and curator for the National Writing Project&#039;s Digital Is website and an app reviewer for YogiPlay. Erin is a knitter, DIY enthusiast, and occasional food blogger. As a new parent, she&#039;s learning a ton about early childhood development and is having a blast witnessing the endless curiosity of her infant son.</p>\n",
+    "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/1473181-user-picture_0.jpg",
+    "first_name":"Erin Wilkey",
+    "last_name":"Oh",
+    ...
+  },
+}
+</pre>
+
+
+<a name="api-boards-item"></a>
+GET /v3/education/boards/{id}
+-------------------------------
+
+Get a specified Board.
+
+### Path Parameters
+
+* `id` - The system ID of a Board.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/boards/3961626?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+A <a href="#boards-object">Boards object</a>.
+
+<a name="api-user-reviews-list"></a>
+GET /v3/education/user_reviews
+--------------------------
+
+Get a list of Field Notes.
+
+### Query Parameters
+
+* `ids` - A comma separated list of Field Note IDs to be retrieved.
+  * default: all records returned.
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
+  * default: `-created` *(decending)*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/user_reviews?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+An array of Field Note objects.
+
+<a name="user-review-object"></a>
+### Field Note Object Sample
+
+<pre>
+{
+  "id":3963361,
+  "title":"Minecraft for Schools Made Easy",
+  "status":1,
+  "type":"field_note",
+  "created":"2014-05-13T17:12:42.000Z",
+  "changed":"2014-06-04T14:47:08.000Z",
+  "url":"https://www.graphite.org/game/minecraftedu-teacher-review/3963361",
+  "product_id":3888265,
+  "engagement_rating":5,
+  "pedagogy_rating":4,
+  "support_rating":5,
+  "learning_rating":5,
+  "setup_time":"gt15",
+  "review":"<p>Once you can get the software up and running, it&#039;s easy. There is a great Google Group community called &quot;Minecraft Teachers&quot; that are extremely helpful and willing to answer any questions you may have. The biggest hurdle for me, as a teacher, is making sure students understand the difference between how they play Minecraft at home vs. how they are expected to play in school. Many students simply want to kill or be killed when they play at home, and my purpose for using Minecraft in school is very different. I want to get students to cooperate and collaborate with each other, solve problems, and be creative instead of &quot;griefing&quot; each other. Overall, the fact that I&#039;m allowing students to use Minecraft in school has been highly motivating and engaging for ALL students.</p>\n",
+  "experience":"<p>The Minecraft EDU version of Minecraft includes a wide variety of tools for teachers to use in the classroom. I&#039;ve used it to teach Digital Citizenship, Social Studies, and Language Arts. Examples of projects I&#039;ve used with grades 1-5 include:<br />\n5th Grade: creating a replica of Jamestown Colony<br />\n4th Grade: create a mining town in Colorado<br />\n3rd Grade: create an Anasazi Cliff Dwelling<br />\n2nd and 1st Grade: create buildings in a community<br />\nThe possibilities are endless. Further ideas I plan to use:  create a setting from a book that students have read, reinforce area and perimeter, construct geometric shapes, build circuits with redstone.</p>\n",
+  "purpose":[
+    {
+      "name":"Creation",
+      "parent_id":0,
+      "id":21951
+    },
+    ...
+  ],
+  "population":[
+    {
+      "name":"General",
+      "parent_id":0,
+      "id":21958
+    },
+    ...
+  ]
+  "product":{
+    "id":3888265,
+    "title":"MinecraftEdu",
+    "esrb_explanation":"Not rated by the ESRB",
+    "subscription_price":null,
+    "pricing_details":"",
+    "price":"$41.00",
+    "release_date":"2013-04-15T07:00:00.000Z",
+    "image":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/experience-media-file/minecraft-edu_0.jpg",
+    "changed":"2015-04-13T18:00:02.000Z",
+    "created":"2013-05-07T22:58:00.000Z",
+    ...
+    "review":{
+      "id":3888432,
+      "status":1,
+      "type":"learning_rating",
+      "created":"2013-05-07T22:59:00.000Z",
+      "changed":"2015-04-22T19:07:09.000Z",
+      "url":"https://www.graphite.org/game/minecraftedu",
+      ...
+    },
+  },
+  "author":{
+    "id":2169956,
+    "bio":"<p>Technology Specialist at Village East Elementary.</p>\n",
+    "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/2169956-user-picture.jpg",
+    "first_name":"Joel",
+    "last_name":"Solomon",
+    ...
+  },
+}
+</pre>
+
+
+<a name="api-user-revews-item"></a>
+GET /v3/education/user_reviews/{id}
+-----------------------------------
+
+Get a specified Field Note.
+
+### Path Parameters
+
+* `id` - The system ID of a Field Note.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/user_reviews/3963361?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+A <a href="#user-reviews-object">Field Note object</a>.
+
+
+<a name="api-user-list"></a>
+GET /v3/education/users
+-----------------------
+
+Get a list of Users.
+
+### Query Parameters
+
+* `ids` - A comma separated list of user IDs to be retrieved.
+  * default: all records returned.
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+* `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
+  * default: `-created` *(decending)*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/user?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+An array of User objects.
+
+<a name="user-object"></a>
+### User Object Sample
+
+<pre>
+{
+  "id":1473181,
+  "bio":"<p>Before joining Common Sense Education as senior editor of education reviews, Erin spent several years teaching English for non-native speakers at a community college and 11th/12th-grade English at an urban public high school. Her school district&#039;s 1:1 laptop program sparked her interest in what teaching and learning could look like in a connected classroom. Erin has bachelor&#039;s degrees in English and secondary education and a master&#039;s degree in instructional design and technology. She also explored the educational potential of new media as a writer and curator for the National Writing Project&#039;s Digital Is website and an app reviewer for YogiPlay. Erin is a knitter, DIY enthusiast, and occasional food blogger. As a new parent, she&#039;s learning a ton about early childhood development and is having a blast witnessing the endless curiosity of her infant son.</p>\n",
+  "profile_picture":"https://d2gtfp3wq3fbfv.cloudfront.net/sites/default/files/user-pictures/1473181-user-picture_0.jpg",
+  "first_name":"Erin Wilkey",
+  "last_name":"Oh",
+  "display_name":"Erin Wilkey O.",
+  "full_name":"Erin Wilkey Oh",
+  "status":1,
+  "role_title":null,
+  "role_title_other":null,
+  "teaching_since":null,
+  "school_tech_profile":null,
+  "profile_url":"https://www.graphite.org/users/erin-wilkey-oh",
+  "is_homeschooler":false,
+  "is_educator":false,
+  "is_parent":false,
+  "is_expert_educator":false,
+  "is_fully_registered":false,
+  "is_admin":false,
+  "filtered_roles":[
+    {
+      "name":"Graphite Reviewer",
+      "parent_id":0
+    },
+    ...
+  ],
+  "grades":[],
+  "subjects":[],
+  "created":"2012-04-21T00:22:04.000Z",
+  "login":"2015-05-01T14:36:58.000Z",
+  "school":{
+    "name":null,
+    "city":null,
+    "state":null
+  }
+}
+</pre>
+
+
+<a name="api-user-revews-item"></a>
+GET /v3/education/users/{id}
+----------------------------
+
+Get a specified User.
+
+### Path Parameters
+
+* `id` - The system ID of a User.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/education/users/1247882?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+A <a href="#user-object">User object</a>.
+
+<a name="api-search-products"></a>
+GET /v3/education/search/products/{query}
+-----------------------------------------
+
+Search for products.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `type` - The type of product to filter by.
+  * default: *all data fields*
+  * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/products/math?type=app&app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#product-object">product objects</a>.
+
+<a name="api-search-flows"></a>
+GET /v3/education/search/flows/{query}
+-----------------------------------------
+
+Search for Lesson Flows.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/products/math?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#lesson-flow-object">Lesson Flow objects</a>.
+
+<a name="api-search-blogs"></a>
+GET /v3/education/search/blogs/{query}
+-----------------------------------------
+
+Search for Blog posts.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/blogs/math?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#blog-object">Blog Post objects</a>.
+
+<a name="api-search-lists"></a>
+GET /v3/education/search/lists/{query}
+-----------------------------------------
+
+Search for Top Picks Lists.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/lists/math?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#list-object">Top Picks List objects</a>.
+
+<a name="api-search-boards"></a>
+GET /v3/education/search/boards/{query}
+-----------------------------------------
+
+Search for Boards.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/boards/math?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#board-object">Board objects</a>.
+
+<a name="api-search-user-reviews"></a>
+GET /v3/education/search/user_reviews/{query}
+-----------------------------------------
+
+Search for Field Notes.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/user_reviews/math?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#user-review-object">Field Note objects</a>.
+
+<a name="api-search-users"></a>
+GET /v3/education/search/users/{query}
+-----------------------------------------
+
+Search for Users.
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `fields` - A comma separated list of fields to be outputted.
+  * default: *all data fields*
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET https://graphite-api.commonsense.org/v3/search/users/john?app_id=abc123&token=xyz456
+</pre>
+
+### Output
+
+An array of <a href="#user-object">User objects</a>.
