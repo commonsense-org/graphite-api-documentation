@@ -138,7 +138,7 @@ Get a list of products.
 * `ids` - A comma separated list of product IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -315,7 +315,7 @@ Get a specified product.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -338,7 +338,7 @@ Get a list of Lesson Flows.
 * `ids` - A comma separated list of Lesson Flow IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -436,7 +436,7 @@ Get a specified Lesson Flow.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -459,7 +459,7 @@ Get a list of blog posts.
 * `ids` - A comma separated list of blog IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -543,7 +543,7 @@ Get a specified blog post.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -566,7 +566,7 @@ Get a list of Top Picks lists.
 * `ids` - A comma separated list of Top Pick List IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -650,7 +650,7 @@ Get a specified Top Picks List post.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -674,7 +674,7 @@ Get a list of Boards.
 * `ids` - A comma separated list of Board IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -749,7 +749,7 @@ Get a specified Board.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -772,7 +772,7 @@ Get a list of Field Notes.
 * `ids` - A comma separated list of Field Note IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -871,7 +871,7 @@ Get a specified Field Note.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -895,13 +895,17 @@ Get a list of Users.
 * `ids` - A comma separated list of user IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields.
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
   * default: `10`
 * `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
   * default: `-created` *(decending)*
+* `has_school` - Boolean `true` or `false` that filters whether the users have a school association.
+  * default: all records returned.
+* `school_state` - A 2 letter abbreviation of a school's state/province to filter by *(example: **CA** for California)*.
+    * default: all records returned.
 
 ### Example
 
@@ -969,7 +973,7 @@ Get a specified User.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 
 ### Example
 
@@ -994,10 +998,10 @@ Search for products.
 ### Query Parameters
 
 * `type` - The type of product to filter by.
-  * default: *all data fields*
+  * default: all data fields
   * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1026,7 +1030,7 @@ Search for Lesson Flows.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1055,7 +1059,7 @@ Search for Blog posts.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1084,7 +1088,7 @@ Search for Top Picks Lists.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1113,7 +1117,7 @@ Search for Boards.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1142,7 +1146,7 @@ Search for Field Notes.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
@@ -1171,7 +1175,7 @@ Search for Users.
 ### Query Parameters
 
 * `fields` - A comma separated list of fields to be outputted.
-  * default: *all data fields*
+  * default: all data fields
 * `page` - The page offset of the data set.
   * default: `1`
 * `limit` - The number of records to be outputted per page.
