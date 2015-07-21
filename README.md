@@ -9,6 +9,7 @@ Table of Contents
 
 #### Overview:
 
+* [URL Patterns](#api-url-patterns)
 * [Retrieving Resources](#api-retrieving-resources)
 * [Request Authentication](#api-request-authentication)
 
@@ -39,6 +40,13 @@ Table of Contents
 ---
 
 # Overview
+
+<a name="api-url-patterns"></a>
+URL Patterns
+--------------------
+
+Generically in this documentation URLs will use https://graphite-api.commonsense.org as the canonical reference for documentation.
+However, it should be noted that the alternate form is https://graphite-api-{ENV}.commonsense.org where ENV can be `qa` or `dev`.
 
 <a name="api-retrieving-resources"></a>
 Retrieving Resources
