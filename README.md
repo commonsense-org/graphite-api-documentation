@@ -153,6 +153,8 @@ Get a list of products.
   * default: `10`
 * `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
   * default: `-created` *(decending)*
+* `hasPolicyUrl` - Boolean `true` or `false` that filters whether the products have a privacy policy URL.
+  * default: all records returned.
 
 ### Example
 
