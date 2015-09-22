@@ -184,6 +184,9 @@ An array of product objects.
   "pricing_details":null,
   "subscription_price":null,
   "esrb_explanation":"Fantasy Violence",
+  "policy_urls":[
+    "https://www.minecraft.net/policy",
+  ],
   "platforms":[
     {
       "name":"Linux",
