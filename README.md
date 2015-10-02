@@ -155,6 +155,8 @@ Get a list of products.
   * default: `-created` *(decending)*
 * `hasPolicyUrl` - Boolean `true` or `false` that filters whether the products have a privacy policy URL.
   * default: all records returned.
+* `allProducts` - Boolean `true` or `false` that filters whether all products are to be fetched.  If `false`, only products that have a Graphite review are returned.
+  * default: `false` products with Graphite reviews are returned.
 
 ### Example
 
