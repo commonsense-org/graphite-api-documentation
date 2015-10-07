@@ -36,6 +36,7 @@ Table of Contents
 * [GET /v3/education/search/boards/{query}](#api-search-boards) - Search for Boards.
 * [GET /v3/education/search/user_reviews/{query}](#api-search-user-reviews) - Search for Field Notes.
 * [GET /v3/education/search/users/{query}](#api-search-users) - Search for users.
+* [GET /v3/education/search/content/{query}](#api-search-content) - Search for content across various content types.
 
 ---
 
@@ -1205,3 +1206,41 @@ curl -X GET "https://graphite-api.commonsense.org/v3/search/users/john?appId=abc
 ### Output
 
 An array of <a href="#user-object">User objects</a>.
+
+<a name="api-search-content"></a>
+GET /v3/education/search/content/{query}
+-----------------------------------------
+
+Search for content across various content types.  The supported content types are:
+* Product Reviews (`app`, `website`, `game`)
+* Teacher Reviews (`field_note`)
+* Lesson Flows (`flow`)
+* Boards (`board`)
+* Blogs (`blog`)
+* Top Picks Lists (`top_picks`)
+* External Resources (`asset`)
+
+### Path Parameters
+
+* `query` - The search string.
+
+### Query Parameters
+
+* `types` - A comma separated list of content types to filter by.
+  * default: all content types
+* `fields` - A comma separated list of fields to be outputted.
+  * default: all data fields
+* `page` - The page offset of the data set.
+  * default: `1`
+* `limit` - The number of records to be outputted per page.
+  * default: `10`
+
+### Example
+
+<pre>
+curl -X GET "https://graphite-api.commonsense.org/v3/search/content/math?appId=abc123&clientId=xyz456"
+</pre>
+
+### Output
+
+An array of data objects of the various content types.
