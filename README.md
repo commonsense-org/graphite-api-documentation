@@ -58,7 +58,7 @@ Retrieving resources with the HTTP GET method is as simple as GETting its URL. G
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/example/endpoint?foo=bar&hello=world&appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/products?foo=bar&hello=world"
 </pre>
 
 Possible response status codes for GET requests:
@@ -125,12 +125,12 @@ A request with an error:
 Request Authentication
 ----------------------
 
-Each REST API call is to send a valid `app_id` and `token` combination in the query string.
+Each REST API call is to send a valid `client-id` and `app-id` combination in the HTTP request header.
 
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/products?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/products"
 </pre>
 
 ---
@@ -162,7 +162,7 @@ Get a list of products.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/products?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/products"
 </pre>
 
 ### Output
@@ -336,7 +336,7 @@ Get a specified product.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/products/1247882?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/products/1247882"
 </pre>
 
 ### Output
@@ -365,7 +365,7 @@ Get a list of Lesson Flows.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/flows?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/flows"
 </pre>
 
 ### Output
@@ -457,7 +457,7 @@ Get a specified Lesson Flow.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/flows/3898001?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/flows/3898001"
 </pre>
 
 ### Output
@@ -486,7 +486,7 @@ Get a list of blog posts.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/blogs?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/blogs"
 </pre>
 
 ### Output
@@ -564,7 +564,7 @@ Get a specified blog post.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/blogs/3899826?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/blogs/3899826"
 </pre>
 
 ### Output
@@ -593,7 +593,7 @@ Get a list of Top Picks lists.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/lists?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/lists"
 </pre>
 
 ### Output
@@ -671,7 +671,7 @@ Get a specified Top Picks List post.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/lists/3887113?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/lists/3887113"
 </pre>
 
 ### Output
@@ -701,7 +701,7 @@ Get a list of Boards.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/boards?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/boards"
 </pre>
 
 ### Output
@@ -770,7 +770,7 @@ Get a specified Board.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/boards/3961626?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/boards/3961626"
 </pre>
 
 ### Output
@@ -799,7 +799,7 @@ Get a list of Field Notes.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/user_reviews?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/user_reviews"
 </pre>
 
 ### Output
@@ -892,7 +892,7 @@ Get a specified Field Note.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/user_reviews/3963361?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/user_reviews/3963361"
 </pre>
 
 ### Output
@@ -926,7 +926,7 @@ Get a list of Users.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/user?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/users"
 </pre>
 
 ### Output
@@ -994,7 +994,7 @@ Get a specified User.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/education/users/1247882?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/users/1247882"
 </pre>
 
 ### Output
@@ -1026,7 +1026,7 @@ Search for products.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/products/math?type=app&appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/search/products/math?type=app"
 </pre>
 
 ### Output
@@ -1055,7 +1055,7 @@ Search for Lesson Flows.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/products/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/search/products/math"
 </pre>
 
 ### Output
@@ -1084,7 +1084,7 @@ Search for Blog posts.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/blogs/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/search/blogs/math"
 </pre>
 
 ### Output
@@ -1113,7 +1113,7 @@ Search for Top Picks Lists.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/lists/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/lists/math"
 </pre>
 
 ### Output
@@ -1142,7 +1142,7 @@ Search for Boards.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/boards/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/boards/math"
 </pre>
 
 ### Output
@@ -1171,7 +1171,7 @@ Search for Field Notes.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/user_reviews/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/user_reviews/math"
 </pre>
 
 ### Output
@@ -1200,7 +1200,7 @@ Search for Users.
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/users/john?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/search/users/john"
 </pre>
 
 ### Output
@@ -1238,7 +1238,7 @@ Search for content across various content types.  The supported content types ar
 ### Example
 
 <pre>
-curl -X GET "https://graphite-api.commonsense.org/v3/search/content/math?appId=abc123&clientId=xyz456"
+curl -H "client-id: abc123" -H "app-id: xyz456" -G "https://api.graphite.org/v3/education/content/math"
 </pre>
 
 ### Output
