@@ -46,8 +46,8 @@ Table of Contents
 URL Patterns
 --------------------
 
-Generically in this documentation URLs will use https://graphite-api.commonsense.org as the canonical reference for documentation.
-However, it should be noted that the alternate form is https://graphite-api-{ENV}.commonsense.org where ENV can be `qa` or `dev`.
+Generically in this documentation URLs will use https://api.graphite.org as the canonical reference for documentation.
+However, it should be noted that the alternate form is https://api-{ENV}.graphite.org where ENV can be `qa` or `dev`.
 
 <a name="api-retrieving-resources"></a>
 Retrieving Resources
