@@ -154,6 +154,9 @@ Get a list of products.
   * default: `10`
 * `sort` - A comma separated list of fields, each with a possible unary negative to imply descending sort order.
   * default: `-created` *(decending)*
+* `types` - A comma separated list of product types to filter by.
+  * default: all data fields
+  * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
 * `hasPolicyUrl` - Boolean `true` or `false` that filters whether the products have a privacy policy URL.
   * default: all records returned.
 * `allProducts` - Boolean `true` or `false` that filters whether all products are to be fetched.  If `false`, only products that have a Graphite review are returned.
@@ -1013,7 +1016,7 @@ Search for products.
 
 ### Query Parameters
 
-* `type` - The type of product to filter by.
+* `types` - A comma separated list of product types to filter by.
   * default: all data fields
   * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
 * `fields` - A comma separated list of fields to be outputted.
@@ -1226,8 +1229,9 @@ Search for content across various content types.  The supported content types ar
 
 ### Query Parameters
 
-* `types` - A comma separated list of content types to filter by.
-  * default: all content types
+* `types` - A comma separated list of product types to filter by.
+  * default: all data fields
+  * values: `app`, `game`, `website`, `movie`, `book`, `music`, or `tv`
 * `fields` - A comma separated list of fields to be outputted.
   * default: all data fields
 * `page` - The page offset of the data set.
