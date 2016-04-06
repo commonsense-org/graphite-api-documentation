@@ -690,8 +690,7 @@ Get a list of Boards.
 
 ### Query Parameters
 
-* `minPosts` - The minimum number of posts items a board is to contain.
-  * default: 1.
+* `minPosts` - The minimum number of posts items a board is to contain.  If not specified, all boards will be fetched.
 * `ids` - A comma separated list of Board IDs to be retrieved.
   * default: all records returned.
 * `fields` - A comma separated list of fields to be outputted.
